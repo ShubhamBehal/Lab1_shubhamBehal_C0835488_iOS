@@ -62,14 +62,14 @@
 		1CC8BAEC248E151200B0969E /* TicTacToe-template */ = {
 			isa = PBXGroup;
 			children = (
+				386FA1B7279F72090066B3D0 /* view */,
+				386FA1B6279F71F10066B3D0 /* controller */,
+				386FA1B5279F71E40066B3D0 /* model */,
 				1CC8BB01248E156500B0969E /* res */,
 				1CC8BAED248E151200B0969E /* AppDelegate.swift */,
 				1CC8BAEF248E151200B0969E /* SceneDelegate.swift */,
-				1CC8BAF1248E151200B0969E /* ViewController.swift */,
-				1CC8BAF3248E151200B0969E /* Main.storyboard */,
 				1CC8BAF6248E151500B0969E /* Assets.xcassets */,
 				1CC8BAFB248E151500B0969E /* Info.plist */,
-				38883EA227962E19005CEE0A /* ScoreInfo.swift */,
 			);
 			path = "TicTacToe-template";
 			sourceTree = "<group>";
@@ -82,6 +82,30 @@
 				1CC8BB04248E156500B0969E /* nought.png */,
 			);
 			path = res;
+			sourceTree = "<group>";
+		};
+		386FA1B5279F71E40066B3D0 /* model */ = {
+			isa = PBXGroup;
+			children = (
+				38883EA227962E19005CEE0A /* ScoreInfo.swift */,
+			);
+			path = model;
+			sourceTree = "<group>";
+		};
+		386FA1B6279F71F10066B3D0 /* controller */ = {
+			isa = PBXGroup;
+			children = (
+				1CC8BAF1248E151200B0969E /* ViewController.swift */,
+			);
+			path = controller;
+			sourceTree = "<group>";
+		};
+		386FA1B7279F72090066B3D0 /* view */ = {
+			isa = PBXGroup;
+			children = (
+				1CC8BAF3248E151200B0969E /* Main.storyboard */,
+			);
+			path = view;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

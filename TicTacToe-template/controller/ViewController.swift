@@ -230,6 +230,8 @@ class ViewController: UIViewController {
             scores.isCross = true
         }
         scores.lastTurnButton!.setImage(nil, for: .normal)
+        scores.lastTurnButton = nil
+        
     }
 }
 
