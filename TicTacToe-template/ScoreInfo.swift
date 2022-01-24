@@ -7,12 +7,14 @@
 //
 
 import Foundation
+import UIKit
 
-class ScoreInfo{
+struct ScoreInfo{
     var isCross = false
     var crossIds : [Int] = []
     var noughtsIds : [Int] = []
     var naughtScore = 0
     var crossScore = 0
     var drawCount = 0
+    var lastTurnButton : UIButton? = nil
 }

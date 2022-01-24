@@ -22,7 +22,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var drawCount: UILabel!
     
 
-    let scores = ScoreInfo()
+    var scores = ScoreInfo()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,6 +45,10 @@ class ViewController: UIViewController {
         let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(onSwipe))
         swipeDown.direction = UISwipeGestureRecognizer.Direction.down
         view.addGestureRecognizer(swipeDown)
+        
+        //adding shake observer
+        
+        self.becomeFirstResponder()
     }
 
     @IBAction func onPlayAgainClicked(_ sender: Any) {
@@ -124,6 +128,7 @@ class ViewController: UIViewController {
                 UIView.animate(withDuration: 2) {
                     btn.alpha = 1
                 }
+        scores.lastTurnButton = btn
         
     }
     
@@ -192,6 +197,39 @@ class ViewController: UIViewController {
     @objc func onSwipe(gesture: UISwipeGestureRecognizer) {
         resetValues()
         restartGame()
+    }
+    
+    override var canBecomeFirstResponder: Bool {
+        get {
+            return true
+        }
+    }
+    
+    override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
+        if motion == .motionShake {
+            undoLastTurn()
+        }
+    }
+    
+    func undoLastTurn(){
+        if(scores.lastTurnButton == nil){
+            return
+        }
+        
+        if(scores.isCross){
+            //last turn was of naught
+            if let index = scores.noughtsIds.firstIndex(of: scores.lastTurnButton!.tag) {
+                scores.noughtsIds.remove(at: index)
+            }
+            scores.isCross = false
+        }else{
+            //last turn was of cross
+            if let index = scores.crossIds.firstIndex(of: scores.lastTurnButton!.tag) {
+                scores.crossIds.remove(at: index)
+            }
+            scores.isCross = true
+        }
+        scores.lastTurnButton!.setImage(nil, for: .normal)
     }
 }
 
