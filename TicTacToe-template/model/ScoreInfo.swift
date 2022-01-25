@@ -9,12 +9,12 @@
 import Foundation
 import UIKit
 
-struct ScoreInfo{
-    var isCross = false
+struct ScoreInfo {
+    var isCross : Bool = false
     var crossIds : [Int] = []
     var noughtsIds : [Int] = []
-    var naughtScore = 0
-    var crossScore = 0
-    var drawCount = 0
-    var lastTurnButton : UIButton? = nil
+    var naughtScore : Int = 0
+    var crossScore : Int = 0
+    var drawCount : Int = 0
+    var lastTurnButton : Int = -1
 }

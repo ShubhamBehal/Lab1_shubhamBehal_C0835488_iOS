@@ -24,9 +24,22 @@ class ViewController: UIViewController {
 
     var scores = ScoreInfo()
     
+    //to save data in local storage
+    let defaults = UserDefaults.standard
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+        scores.isCross =  defaults.bool(forKey:"isCross")
+        scores.naughtScore = defaults.integer(forKey: "naughtScore")
+        scores.crossScore = defaults.integer(forKey: "crossScore")
+        scores.drawCount =  defaults.integer(forKey: "drawCount")
+        scores.noughtsIds =  defaults.object(forKey:"noughtsIds") as? [Int] ?? [Int]()
+        scores.crossIds =  defaults.object(forKey:"crossIds") as? [Int] ?? [Int]()
+        scores.lastTurnButton =  defaults.integer(forKey: "lastTurnButton")
+        
+        handleUI()
+       
         
         btnPlayAgain.isHidden = true
         
@@ -128,7 +141,7 @@ class ViewController: UIViewController {
                 UIView.animate(withDuration: 2) {
                     btn.alpha = 1
                 }
-        scores.lastTurnButton = btn
+        scores.lastTurnButton = btn.tag
         
     }
     
@@ -212,26 +225,79 @@ class ViewController: UIViewController {
     }
     
     func undoLastTurn(){
-        if(scores.lastTurnButton == nil){
+        if(scores.lastTurnButton == -1){
             return
         }
         
         if(scores.isCross){
             //last turn was of naught
-            if let index = scores.noughtsIds.firstIndex(of: scores.lastTurnButton!.tag) {
+            if let index = scores.noughtsIds.firstIndex(of: scores.lastTurnButton) {
                 scores.noughtsIds.remove(at: index)
             }
             scores.isCross = false
         }else{
             //last turn was of cross
-            if let index = scores.crossIds.firstIndex(of: scores.lastTurnButton!.tag) {
+            if let index = scores.crossIds.firstIndex(of: scores.lastTurnButton) {
                 scores.crossIds.remove(at: index)
             }
             scores.isCross = true
         }
-        scores.lastTurnButton!.setImage(nil, for: .normal)
-        scores.lastTurnButton = nil
+        fillImages(id : scores.lastTurnButton ,  imageName : "")
+        scores.lastTurnButton = -1
         
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        defaults.set(scores.isCross, forKey: "isCross")
+        defaults.set(scores.naughtScore, forKey: "naughtScore")
+        defaults.set(scores.crossScore, forKey: "crossScore")
+        defaults.set(scores.drawCount, forKey: "drawCount")
+        defaults.set(scores.noughtsIds, forKey: "noughtsIds")
+        defaults.set(scores.crossIds, forKey: "crossIds")
+        defaults.set(scores.lastTurnButton, forKey: "lastTurnButton")
+    }
+    
+    func handleUI(){
+        naughtScore.text = "Naught - \(scores.naughtScore)"
+        crossScore.text = "Cross - \(scores.crossScore)"
+        drawCount.text = "Draws - \(scores.drawCount)"
+        
+        if(scores.noughtsIds.count > 0){
+            for id in scores.noughtsIds{
+                fillImages(id : id ,  imageName : "nought.png")
+            }
+        }
+        
+        if(scores.crossIds.count > 0){
+            for id in scores.crossIds{
+                fillImages(id : id ,  imageName : "cross.png")
+            }
+        }
+    }
+    
+    func fillImages(id  : Int,  imageName : String){
+        switch id {
+        case btn1.tag:
+            btn1.setImage(UIImage(named: imageName), for: .normal)
+        case btn2.tag:
+            btn2.setImage(UIImage(named: imageName), for: .normal)
+        case btn3.tag:
+            btn3.setImage(UIImage(named: imageName), for: .normal)
+        case btn4.tag:
+            btn4.setImage(UIImage(named: imageName), for: .normal)
+        case btn5.tag:
+            btn5.setImage(UIImage(named: imageName), for: .normal)
+        case btn6.tag:
+            btn6.setImage(UIImage(named: imageName), for: .normal)
+        case btn7.tag:
+            btn7.setImage(UIImage(named: imageName), for: .normal)
+        case btn8.tag:
+            btn8.setImage(UIImage(named: imageName), for: .normal)
+        case btn9.tag:
+            btn9.setImage(UIImage(named: imageName), for: .normal)
+        default:
+            print("nothing to handle here")
+        }
     }
 }
 
